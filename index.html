@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>ncue curriculum</title>
+  </title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+  <link rel="stylesheet" href="build/bundle/index.css" />
+</head>
+
+<body>
+
+  <div class="schedule-container"></div>
+
+  <script src="build/Chart.min.js"></script>
+  <script src="build/jquery-2.1.1.min.js"></script>
+  <script src="build/bundle/index.js"></script>
+  <script>
+  var data = [];
+  $('#table1 > tbody > tr').each(function(i, e) {
+    var t = {};
+    t.dpt = $("td:nth-child(3)",e).text();
+    t.name = $("td:nth-child(4)",e).text();
+    d = $("td:nth-child(12)",e).text();
+    t.week = d[1];
+    t.pos = d.slice(4,9);
+    t.place = d.slice(10).trim();
+    data.push(t);
+  });
+  </script>
+
+</body>
+
+</html>

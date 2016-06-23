@@ -1,0 +1,14 @@
+{
+   "content_scripts": [ {
+      "js": [ "./build/jquery-2.1.1.min.js","./build/bundle/index.js" ],
+      "css": [ "./build/bundle/index.css" ],
+      "matches": [ "http://webap0.ncue.edu.tw/deanv2/other/ob010" ]
+   } ],
+   "manifest_version": 2,
+   "name": "ncue-curriculum",
+   "permissions": [ "tabs", "activeTab", "http://*/*", "https://*/*" ],
+   "background": {
+    "scripts": []
+   },
+   "version": "1.0.0"
+}
