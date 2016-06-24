@@ -28,6 +28,9 @@ var Course = React.createClass({
     }
   },
   render: function() {
+    if(this.props.dup.length>1){
+      console.log(this.props.dup);
+    }
     var topOffset = ( parseInt(this.props.data.pos.slice(0,2)) >= 5 )?parseInt(this.props.data.pos.slice(0,2))+1:parseInt(this.props.data.pos.slice(0,2));
     var bottomOffset = ( parseInt(this.props.data.pos.slice(3,5)) >= 5 )?parseInt(this.props.data.pos.slice(3,5))+1:parseInt(this.props.data.pos.slice(3,5));
     return (
@@ -42,6 +45,9 @@ var Course = React.createClass({
         <span>
           {this.props.data.dpt[0]}
         </span>
+        {
+          (this.props.dup.length>1)?<span className="num-boble">{this.props.dup.length}</span>:null
+        }
       </div>
     );
   },
@@ -61,7 +67,13 @@ var DaySheet = React.createClass({
       <div>
         {
           this.props.data.map(function(e, i) {
-            return <Course delete={this.props.delete} data={e} key={i} />;
+            var dup = [e.name];
+            this.props.data.forEach(function(e2, i2) {
+              if(e.pos === e2.pos && e.name !== e2.name){
+                dup.push(e2.name);
+              }
+            });
+            return <Course delete={this.props.delete} dup={dup} data={e} key={i} />;
           }.bind(this))
         }
       </div>
@@ -162,7 +174,21 @@ var Schedule = React.createClass({
       data: this.state.data
     });
   },
+  componentWillUpdate: function() {
+    localStorage.courses = JSON.stringify(this.state.data);
+  },
   componentDidMount: function() {
+    if(localStorage.courses){
+      try{
+        this.setState({
+          data: JSON.parse(localStorage.courses)
+        });
+      }catch(e){
+        this.setState({
+          data: []
+        });
+      }
+    }
     $('#result').delegate('#table1 > tbody > tr', "click", function(event) {
       var t = {};
       t.dpt = $("td:nth-child(3)", event.currentTarget).text();

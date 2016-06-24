@@ -39,7 +39,7 @@
     height: 50px;
     text-align: center;
     line-height: 46px;
-    background: #50b2ff;
+    background: #e45656;
     border-radius: 10px 0 0 10px;
     position: absolute;
     left: -50px;
@@ -49,11 +49,11 @@
     transition: 0.2s all;
     box-shadow: 0 2px 3px rgb(55, 132, 191);
     &:hover {
-      background: #58aaea;
+      background: #de3d3d;
       color: rgba(255, 255, 255, 0.92);
     }
     &:active {
-      background: #3092de;
+      background: #ca2424;
       color: rgba(255, 255, 255, 0.92);
       box-shadow: none;
     }
@@ -155,6 +155,13 @@
         line-height: 1.8;
         margin: 0.5em auto;
         color: #7d7b5f;
+      }
+      .num-boble {
+        background: rgb(255, 0, 0);
+        color: rgba(255, 255, 255, 0.7);
+        position: absolute;
+        top: -5px;
+        right: 2px;
       }
     }
   }
