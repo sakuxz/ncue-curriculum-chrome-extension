@@ -28,9 +28,6 @@ var Course = React.createClass({
     }
   },
   render: function() {
-    if(this.props.dup.length>1){
-      console.log(this.props.dup);
-    }
     var topOffset = ( parseInt(this.props.data.pos.slice(0,2)) >= 5 )?parseInt(this.props.data.pos.slice(0,2))+1:parseInt(this.props.data.pos.slice(0,2));
     var bottomOffset = ( parseInt(this.props.data.pos.slice(3,5)) >= 5 )?parseInt(this.props.data.pos.slice(3,5))+1:parseInt(this.props.data.pos.slice(3,5));
     return (
@@ -46,7 +43,16 @@ var Course = React.createClass({
           {this.props.data.dpt[0]}
         </span>
         {
-          (this.props.dup.length>1)?<span className="num-boble">{this.props.dup.length}</span>:null
+          (this.props.dup.length>1)?
+            (<span className="num-boble">{this.props.dup.length}
+               <div className="dup-list">
+               {
+                 this.props.dup.map(function(e, i) {
+                   return <div>{e}</div>;
+                 })
+               }
+               </div>
+             </span>):null
         }
       </div>
     );
@@ -63,12 +69,19 @@ var Course = React.createClass({
 
 var DaySheet = React.createClass({
   render: function() {
+    var sortData = this.props.data.sort(function(a, b) {
+      var aTopOffset = ( parseInt(a.pos.slice(0,2)) >= 5 )?parseInt(a.pos.slice(0,2))+1:parseInt(a.pos.slice(0,2));
+      var aBottomOffset = ( parseInt(a.pos.slice(3,5)) >= 5 )?parseInt(a.pos.slice(3,5))+1:parseInt(a.pos.slice(3,5));
+      var bTopOffset = ( parseInt(b.pos.slice(0,2)) >= 5 )?parseInt(b.pos.slice(0,2))+1:parseInt(b.pos.slice(0,2));
+      var bBottomOffset = ( parseInt(b.pos.slice(3,5)) >= 5 )?parseInt(b.pos.slice(3,5))+1:parseInt(b.pos.slice(3,5));
+      return ( aBottomOffset - aTopOffset ) < ( bBottomOffset - bTopOffset );
+    });
     return (
       <div>
         {
-          this.props.data.map(function(e, i) {
+          sortData.map(function(e, i) {
             var dup = [e.name];
-            this.props.data.forEach(function(e2, i2) {
+            sortData.forEach(function(e2, i2) {
               if(e.pos === e2.pos && e.name !== e2.name){
                 dup.push(e2.name);
               }
@@ -86,6 +99,20 @@ var Schedule = React.createClass({
     return {
       open: false,
       data: [
+          // {
+          //   name: '計算機圖學',
+          //   place: '電腦教室',
+          //   dpt: "資工系",
+          //   week: "二",
+          //   pos: "01-03"
+          // },
+          // {
+          //   name: '資料探勘',
+          //   place: '33305',
+          //   dpt: "資工系",
+          //   week: "二",
+          //   pos: "01-03"
+          // }
       ]
     };
   },
